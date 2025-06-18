@@ -19,6 +19,4 @@ final class NetworkManager {
         }
     }
     
-    var url2: String = "http://universities.hipolabs.com/search?country=turkey"
-    
 }
