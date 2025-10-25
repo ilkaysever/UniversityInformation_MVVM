@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5E6BACC12E0300DD006ABA2D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5E6BACC02E0300DD006ABA2D /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		5E26BE902DE0698F008EE063 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E6BACC12E0300DD006ABA2D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = UniversityInformation;
 			packageProductDependencies = (
+				5E6BACC02E0300DD006ABA2D /* Alamofire */,
 			);
 			productName = UniversityInformation;
 			productReference = 5E26BE762DE0698D008EE063 /* UniversityInformation.app */;
@@ -208,6 +214,9 @@
 			);
 			mainGroup = 5E26BE6D2DE0698D008EE063;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5E6BACBF2E0300DD006ABA2D /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5E26BE772DE0698D008EE063 /* Products */;
 			projectDirPath = "";
@@ -579,6 +588,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5E6BACBF2E0300DD006ABA2D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5E6BACC02E0300DD006ABA2D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5E6BACBF2E0300DD006ABA2D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5E26BE6E2DE0698D008EE063 /* Project object */;
 }
