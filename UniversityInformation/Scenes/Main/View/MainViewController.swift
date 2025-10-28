@@ -10,16 +10,43 @@ import UIKit
 final class MainViewController: UIViewController {
     
     let tableView = UITableView()
-    let viewModel = MainViewModel()
+    let viewModel: MainViewModelProtocol?
+    var model: [UniversityModel] = []
+    
+    init(viewModel: MainViewModelProtocol = MainViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        view.backgroundColor = .white
+        navigationTitlte()
         configureTableView()
+        fetchData()
+    }
+    
+    private func navigationTitlte() {
+        navigationItem.title = "TEST"
+        navigationController?.navigationBar.tintColor = .black
+    }
+    
+    private func fetchData() {
+        viewModel?.fetchData(completion: { [weak self] response in
+            guard let self = self, let model = response else { return }
+            self.model = model
+            tableView.reloadData()
+        })
     }
     
     private func configureTableView() {
         view.addSubview(tableView)
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -27,7 +54,7 @@ final class MainViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(MainViewCell.self, forCellReuseIdentifier: "cell")
         tableView.reloadData()
     }
     
@@ -40,12 +67,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRowsInSection(section)
+        return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(indexPath.row)"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? MainViewCell else { return UITableViewCell() }
         return cell
     }
     

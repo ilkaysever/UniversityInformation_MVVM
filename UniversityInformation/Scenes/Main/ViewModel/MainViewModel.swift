@@ -7,10 +7,29 @@
 
 import UIKit
 
-final class MainViewModel {
+protocol MainViewModelProtocol {
+    func fetchData(completion: @escaping([UniversityModel]?) -> Void)
+}
+
+final class MainViewModel: MainViewModelProtocol {
+    
+    var dataResult: [UniversityModel] = []
+    
+    func fetchData(completion: @escaping([UniversityModel]?) -> Void) {
+        NetworkManager.fetchData { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                self.dataResult = data
+                completion(self.dataResult)
+            case .failure(let error):
+                debugPrint(error.localizedDescription)
+            }
+        }
+    }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        return 10
+        return 50
     }
     
 }
