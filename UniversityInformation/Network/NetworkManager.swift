@@ -24,7 +24,6 @@ final class NetworkManager {
             
             guard let data = response.data else { return }
             debugPrint(String(data: data, encoding: .utf8) ?? "")
-            
             do {
                 let data = try JSONDecoder().decode([UniversityModel].self, from: data)
                 completion(.success(data))

@@ -9,6 +9,8 @@ import UIKit
 
 protocol MainViewModelProtocol {
     func fetchData(completion: @escaping([UniversityModel]?) -> Void)
+    func numberOfRowsInSection(_ section: Int) -> Int
+    func configureCell(with model: UniversityModel) -> MainViewCellViewModel
 }
 
 final class MainViewModel: MainViewModelProtocol {
@@ -21,6 +23,10 @@ final class MainViewModel: MainViewModelProtocol {
             switch result {
             case .success(let data):
                 self.dataResult = data
+                let sortedData = data.sorted {
+                    ($0.name ?? "").localizedCaseInsensitiveCompare($1.name ?? "") == .orderedAscending
+                }
+                dataResult = sortedData
                 completion(self.dataResult)
             case .failure(let error):
                 debugPrint(error.localizedDescription)
@@ -29,7 +35,12 @@ final class MainViewModel: MainViewModelProtocol {
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        return 50
+        return dataResult.count
+    }
+    
+    func configureCell(with model: UniversityModel) -> MainViewCellViewModel {
+        let cellModel = MainViewCellViewModel(model: model)
+        return cellModel
     }
     
 }

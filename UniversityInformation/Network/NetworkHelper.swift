@@ -18,7 +18,7 @@ final class NetworkHelper {
     
     public var baseUrlString: String {
         get {
-            return "http://universities.hipolabs.com/search?country=turkey"
+            return "http://universities.hipolabs.com/search?country=turkiye"
         }
     }
     

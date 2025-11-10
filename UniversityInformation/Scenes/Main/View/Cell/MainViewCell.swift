@@ -11,6 +11,12 @@ final class MainViewCell: UITableViewCell {
     
     // MARK: - Properties
     
+    var viewModel: MainViewCellViewModel? {
+        didSet {
+            configureCell()
+        }
+    }
+    
     private lazy var universityStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [universityImageView, universityNameLabel])
         stackView.backgroundColor = .white
@@ -26,6 +32,8 @@ final class MainViewCell: UITableViewCell {
         let image = #imageLiteral(resourceName: "University")
         imageView.clipsToBounds = true
         imageView.backgroundColor = .clear
+        imageView.layer.cornerRadius = 4
+        imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.image = image
         imageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
@@ -37,6 +45,7 @@ final class MainViewCell: UITableViewCell {
         label.backgroundColor = .clear
         label.text = "Test Üniversite Adı"
         label.textColor = .black
+        label.numberOfLines = 0
         label.font = .systemFont(ofSize: 16, weight: .medium)
         return label
     }()
@@ -67,6 +76,11 @@ extension MainViewCell {
             universityStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
             universityStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6)
         ])
+    }
+    
+    func configureCell() {
+        guard let viewModel = self.viewModel else { return }
+        universityNameLabel.text = viewModel.name
     }
     
 }

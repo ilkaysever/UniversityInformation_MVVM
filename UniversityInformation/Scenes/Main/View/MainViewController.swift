@@ -25,14 +25,21 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationTitlte()
+        setupNavigationBarAppearance()
         configureTableView()
         fetchData()
     }
     
-    private func navigationTitlte() {
-        navigationItem.title = "TEST"
+    private func setupNavigationBarAppearance() {
+        self.title = "University List"
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+
         navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     private func fetchData() {
@@ -55,7 +62,6 @@ final class MainViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(MainViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.reloadData()
     }
     
 }
@@ -67,11 +73,12 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        return model.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? MainViewCell else { return UITableViewCell() }
+        cell.viewModel = self.viewModel?.configureCell(with: model[indexPath.row])
         return cell
     }
     
